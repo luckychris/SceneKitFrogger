@@ -1,3 +1,5 @@
+Repaired and updated for Swift 5
+
 SCNFrogger
 ===============
 A 3D Frogger / Crossy Road clone made with Scene Kit and Swift.
