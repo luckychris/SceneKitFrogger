@@ -18,18 +18,18 @@ class HandNode : SKNode {
     
     // Load textures
     let handTexture = SKTexture(imageNamed:"assets.scnassets/Textures/hand.png")
-    handTexture.filteringMode = SKTextureFilteringMode.Nearest
+    handTexture.filteringMode = SKTextureFilteringMode.nearest
     let handTextureClick = SKTexture(imageNamed:"assets.scnassets/Textures/hand_click.png")
-    handTextureClick.filteringMode = SKTextureFilteringMode.Nearest
+    handTextureClick.filteringMode = SKTextureFilteringMode.nearest
     
     // Create animation
-    let handAnimation = SKAction.animateWithTextures([handTexture, handTextureClick], timePerFrame:0.5)
+    let handAnimation = SKAction.animate(with: [handTexture, handTextureClick], timePerFrame:0.5)
     
     // Create a sprite node abd animate it
     let handSprite = SKSpriteNode(texture: handTexture)
     handSprite.xScale = 2.0
     handSprite.yScale = 2.0
-    handSprite.runAction(SKAction.repeatActionForever(handAnimation))
+    handSprite.run(SKAction.repeatForever(handAnimation))
     
     addChild(handSprite)
   }

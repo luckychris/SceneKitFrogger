@@ -22,7 +22,7 @@ enum GameLevelDataType: Int {
 }
 
 
-class GameLevel: Printable {
+class GameLevel: CustomStringConvertible {
   
   // A delegate that is called when a new car needs to be spawned on a road.
   var spawnDelegate: GameLevelSpawnDelegate?
@@ -61,7 +61,7 @@ class GameLevel: Printable {
         type = Int(arc4random_uniform(2)) > 0 ? GameLevelDataType.Grass : GameLevelDataType.Road
       }
       
-      fillLevelDataRowWithType(type, row: row)
+        fillLevelDataRowWithType(type: type, row: row)
     }
     
     // Always make sure the player spawn point is not an obstacle
@@ -82,7 +82,7 @@ class GameLevel: Printable {
           if arc4random_uniform(100) > 80 {
             // Add obstacle
             data[column, row] = GameLevelDataType.Obstacle.rawValue
-            obstacleCountInRow++
+            obstacleCountInRow += 1
           } else {
             // Add grass
             data[column, row] = type.rawValue
@@ -95,7 +95,7 @@ class GameLevel: Printable {
   }
   
   
-  func coordinatesForGridPosition(#column: Int, row: Int) -> SCNVector3 {
+  func coordinatesForGridPosition(column: Int, row: Int) -> SCNVector3 {
     // Raise an error is the column or row is out of bounds
     if column < 0 || column > data.columnCount() - 1 || row < 0 || row > data.rowCount() - 1 {
       fatalError("The row or column is out of bounds")
@@ -141,7 +141,7 @@ class GameLevel: Printable {
   }
   
   
-  func gameLevelDataTypeForGridPosition(#column: Int, row: Int) -> GameLevelDataType {
+  func gameLevelDataTypeForGridPosition(column: Int, row: Int) -> GameLevelDataType {
     // Raise an error is the column or row is out of bounds
     if column < 0 || column > data.columnCount() - 1 || row < 0 || row > data.rowCount() - 1 {
       return GameLevelDataType.Invalid
@@ -188,8 +188,8 @@ class GameLevel: Printable {
     
     // Create road material
     let roadMaterial = SCNMaterial()
-    roadMaterial.diffuse.contents = UIColor.darkGrayColor()
-    roadMaterial.diffuse.wrapT = SCNWrapMode.Repeat
+    roadMaterial.diffuse.contents = UIColor.darkGray
+    roadMaterial.diffuse.wrapT = SCNWrapMode.repeat
     roadMaterial.locksAmbientWithDiffuse = false
     
     // First, create geometry for grass and roads
@@ -226,14 +226,16 @@ class GameLevel: Printable {
         spawnNode.position = position
         
         // Create an action to make the node spawn cars
-        let spawnAction = SCNAction.runBlock({ node in
-          self.spawnDelegate!.spawnCarAtPosition(node.position)
+        let spawnAction = SCNAction.run({ node in
+            OperationQueue.main.addOperation {
+                self.spawnDelegate!.spawnCarAtPosition(position: node.position)
+            }
         })
         
         // Will spawn a new car every 5 + (random time interval up to 5 seconds)
-        let delayAction = SCNAction.waitForDuration(5.0, withRange: 5.0)
+        let delayAction = SCNAction.wait(duration: 5.0, withRange: 5.0)
         
-        spawnNode.runAction(SCNAction.repeatActionForever(SCNAction.sequence([delayAction, spawnAction])))
+        spawnNode.runAction(SCNAction.repeatForever(SCNAction.sequence([delayAction, spawnAction])))
         
         parentNode.addChildNode(spawnNode)
         

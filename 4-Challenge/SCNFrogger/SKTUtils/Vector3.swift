@@ -94,14 +94,14 @@ extension Vector3 {
    * Calculates the dot product with another Vector3.
    */
   public func dot(vector: Vector3) -> CGFloat {
-    return Vector3.dotProduct(self, right: vector)
+    return Vector3.dotProduct(left: self, right: vector)
   }
 
   /**
    * Calculates the cross product with another Vector3.
    */
   public func cross(vector: Vector3) -> Vector3 {
-    return Vector3.crossProduct(self, right: vector)
+    return Vector3.crossProduct(left: self, right: vector)
   }
 
   /**
@@ -136,7 +136,7 @@ public func + (left: Vector3, right: Vector3) -> Vector3 {
 /**
  * Increments a Vector3 with the value of another.
  */
-public func += (inout left: Vector3, right: Vector3) {
+public func += ( left: inout Vector3, right: Vector3) {
   left = left + right
 }
 
@@ -150,7 +150,7 @@ public func - (left: Vector3, right: Vector3) -> Vector3 {
 /**
  * Decrements a Vector3 with the value of another.
  */
-public func -= (inout left: Vector3, right: Vector3) {
+public func -= ( left: inout Vector3, right: Vector3) {
   left = left - right
 }
 
@@ -164,7 +164,7 @@ public func * (left: Vector3, right: Vector3) -> Vector3 {
 /**
  * Multiplies a Vector3 with another.
  */
-public func *= (inout left: Vector3, right: Vector3) {
+public func *= ( left: inout Vector3, right: Vector3) {
   left = left * right
 }
 
@@ -179,7 +179,7 @@ public func * (vector: Vector3, scalar: CGFloat) -> Vector3 {
 /**
  * Multiplies the x,y,z fields of a Vector3 with the same scalar value.
  */
-public func *= (inout vector: Vector3, scalar: CGFloat) {
+public func *= ( vector: inout Vector3, scalar: CGFloat) {
   vector = vector * scalar
 }
 
@@ -193,7 +193,7 @@ public func / (left: Vector3, right: Vector3) -> Vector3 {
 /**
  * Divides a Vector3 by another.
  */
-public func /= (inout left: Vector3, right: Vector3) {
+public func /= ( left: inout Vector3, right: Vector3) {
   left = left / right
 }
 
@@ -208,13 +208,13 @@ public func / (vector: Vector3, scalar: CGFloat) -> Vector3 {
 /**
  * Divides the x,y,z fields of a Vector3 by the same scalar value.
  */
-public func /= (inout vector: Vector3, scalar: CGFloat) {
+public func /= ( vector: inout Vector3, scalar: CGFloat) {
   vector = vector / scalar
 }
 
 /**
  * Performs a linear interpolation between two Vector3 values.
  */
-public func lerp(#start: Vector3, #end: Vector3, #t: CGFloat) -> Vector3 {
+public func lerp(start: Vector3, end: Vector3, t: CGFloat) -> Vector3 {
   return start + (end - start) * t
 }

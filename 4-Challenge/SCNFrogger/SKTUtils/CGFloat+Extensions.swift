@@ -53,7 +53,7 @@ public extension CGFloat {
    * Ensures that the float value stays between the given values, inclusive.
    */
   public mutating func clamp(v1: CGFloat, _ v2: CGFloat) -> CGFloat {
-    self = clamped(v1, v2)
+    self = clamped(v1: v1, v2)
     return self
   }
 
@@ -74,7 +74,7 @@ public extension CGFloat {
   /**
    * Returns a random floating point number in the range min...max, inclusive.
    */
-  public static func random(#min: CGFloat, max: CGFloat) -> CGFloat {
+  public static func random(min: CGFloat, max: CGFloat) -> CGFloat {
     assert(min < max)
     return CGFloat.random() * (max - min) + min
   }
@@ -93,7 +93,7 @@ public extension CGFloat {
  */
 public func shortestAngleBetween(angle1: CGFloat, angle2: CGFloat) -> CGFloat {
     let twoπ = π * 2.0
-    var angle = (angle2 - angle1) % twoπ
+    var angle = (angle2 - angle1).truncatingRemainder(dividingBy: twoπ) 
     if (angle >= π) {
         angle = angle - twoπ
     }

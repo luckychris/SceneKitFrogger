@@ -23,8 +23,8 @@ case Right
 
 
 struct PhysicsCategory {
-  static let None: Int              = 0
-  static let Player: Int            = 0b1      // 1
-  static let Car: Int               = 0b10     // 2
-  static let Obstacle: Int          = 0b100    // 4
+  static let None: Int              = 0 //0
+  static let Player: Int            = 1 //0b1      // 1
+  static let Car: Int               = 2 // 0b10     // 2
+  static let Obstacle: Int          = 4 //0b100    // 4
 }

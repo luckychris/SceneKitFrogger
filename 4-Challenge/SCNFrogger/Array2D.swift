@@ -14,7 +14,7 @@ class Array2D {
   init(cols columnCount: Int, rows rowCount: Int, value defaultValue: Int) {
     self.cols = columnCount
     self.rows = rowCount
-    data = Array(count: cols * rows, repeatedValue: defaultValue)
+    data = Array(repeating: defaultValue, count: cols * rows)
   }
   
   subscript(column: Int, row: Int) -> Int {
